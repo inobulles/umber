@@ -1,0 +1,15 @@
+task:
+  container:
+    image: gcc:latest
+  build_script:
+    - sh build.sh -
+  amd64_artifacts:
+    path: "bin/*"
+
+task:
+  arm_container:
+    image: gcc:latest
+  build_script:
+    - sh build.sh -
+  arm64_artifacts:
+    path: "bin/*"
