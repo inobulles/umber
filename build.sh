@@ -13,6 +13,23 @@ ranlib bin/libumber.a
 
 cc -shared bin/libumber.o -o bin/libumber.so
 
+echo "Running tests ..."
+
+rm -rf .testfiles
+mkdir .testfiles
+
+for path in $(find -L tests -maxdepth 1 -type f -name "*.sh"); do
+    echo -n "Running $path test ..."
+    LD_LIBRARY_PATH=bin sh $path
+    echo " ✅ Passed"
+done
+
+#rm -r .testfiles
+
+if [ $# -gt 0 ]; then
+    exit 0
+fi
+
 echo "Installing libraries & headers (/usr/local) ..."
 
 su_list="cp $(realpath src/umber.h) /usr/local/include"

@@ -1,4 +1,4 @@
-#undef UMBER_COMPONENT
+#undef UMBER_COMPONENT // force user to define this after header inclusion
 
 #if !defined(__UMBER__)
 #define __UMBER__
