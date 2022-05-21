@@ -6,7 +6,8 @@ mkdir bin
 
 echo "Building libraries ..."
 
-cc -std=c99 -fPIC -c src/umber.c -o bin/libumber.o -I src
+# _GNU_SOURCE define for vasprintf on GNU (see feature_test_macros(7))
+cc -std=c99 -D_GNU_SOURCE -fPIC -c src/umber.c -o bin/libumber.o -I src
 
 ar rc bin/libumber.a bin/libumber.o
 ranlib bin/libumber.a
@@ -24,7 +25,7 @@ for path in $(find -L tests -maxdepth 1 -type f -name "*.sh"); do
     echo " ✅ Passed"
 done
 
-#rm -r .testfiles
+rm -r .testfiles
 
 if [ $# -gt 0 ]; then
     exit 0
