@@ -15,7 +15,7 @@ cc -std=c99 $src_path -DCOMPONENT=\"$component\" -DFUNC_NAME=$func_name -DTEST_F
 
 # test all the log levels
 
-clear="\033[0m"
+clear_="\033[0m"
 regular="\033[0;"
 bold="\033[1;"
 
@@ -26,12 +26,13 @@ green="32m"
 blue="34m"
 grey="37m"
 
-echo -e "$bold$purple[FATAL $component -> $src_path -> $func_name -> 5]$regular$purple $test_str $test_arg$clear
-$bold$red[ERROR $component -> $src_path -> $func_name -> 6]$regular$red $test_str $test_arg$clear
-$bold$yellow[WARN $component -> $src_path -> $func_name -> 7]$regular$yellow $test_str $test_arg$clear
-$bold$green[SUCCESS $component -> $src_path -> $func_name -> 8]$regular$green $test_str $test_arg$clear
-$bold$blue[INFO $component -> $src_path -> $func_name -> 9]$regular$blue $test_str $test_arg$clear
-$bold$grey[VERBOSE $component -> $src_path -> $func_name -> 10]$regular$grey $test_str $test_arg$clear" > .testfiles/expected
+printf "$bold$purple[FATAL $component -> $src_path -> $func_name -> 5]$regular$purple $test_str $test_arg$clear_
+$bold$red[ERROR $component -> $src_path -> $func_name -> 6]$regular$red $test_str $test_arg$clear_
+$bold$yellow[WARN $component -> $src_path -> $func_name -> 7]$regular$yellow $test_str $test_arg$clear_
+$bold$green[SUCCESS $component -> $src_path -> $func_name -> 8]$regular$green $test_str $test_arg$clear_
+$bold$blue[INFO $component -> $src_path -> $func_name -> 9]$regular$blue $test_str $test_arg$clear_
+$bold$grey[VERBOSE $component -> $src_path -> $func_name -> 10]$regular$grey $test_str $test_arg$clear_
+" > .testfiles/expected
 
 for lvl in $(seq 0 5); do
 	expected_path=.testfiles/expected$lvl
