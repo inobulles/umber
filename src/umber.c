@@ -57,8 +57,8 @@ void umber_log(umber_lvl_t lvl, const char* component, const char* path, const c
 		#undef LVL_CASE
 	}
 
-	fprintf(fp, BOLD "%s[%s %s -> %s -> %s -> %d]" REGULAR "%s %s" CLEAR "\n",
-		colour, lvl_str, component, path, func, line, colour, msg);
+	fprintf(fp, BOLD "%s[%s %s -> %s:%d -> %s]" REGULAR "%s %s" CLEAR "\n",
+		colour, lvl_str, component, path, line, func, colour, msg);
 }
 
 __attribute__((__format__(__printf__, 6, 0)))
