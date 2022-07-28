@@ -1,4 +1,5 @@
 task:
+  timeout_in: 5m
   container:
     image: gcc:latest
   build_script:
@@ -7,6 +8,7 @@ task:
     path: "bin/*"
 
 task:
+  timeout_in: 5m
   arm_container:
     image: gcc:latest
   build_script:
