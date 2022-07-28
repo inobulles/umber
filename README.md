@@ -7,7 +7,7 @@ Logging library for everything in the AQUA ecosystem.
 On most Unix-like operating systems, build with:
 
 ```console
-$ sh build.sh
+sh build.sh
 ```
 
 This will compile the library, run a few tests, and install it to `/usr/local/lib` (`/usr/local/include` for the `umber.h` header).
