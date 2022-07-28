@@ -48,29 +48,27 @@ $bold$grey[VERBOSE $comp_c -> $src_path:13 -> $func_name]$regular$grey $spec_c$c
 .testfiles/filter > .testfiles/got
 diff .testfiles/expected .testfiles/got
 
-echo "test"
-
 # test blacklisting
 
 UMBER_BLACKLIST=$comp_a .testfiles/filter > .testfiles/got
-grep -v '$comp_a' .testfiles/expected | diff .testfiles/got -
+grep -v $comp_a .testfiles/expected | diff .testfiles/got -
 
 UMBER_BLACKLIST=$comp_a:$comp_b .testfiles/filter > .testfiles/got
-grep -v '$comp_a\|$comp_b' .testfiles/expected | diff .testfiles/got -
+grep -v $comp_a'\|'$comp_b .testfiles/expected | diff .testfiles/got -
 
 UMBER_BLACKLIST=$comp_a:$comp_b:$comp_c .testfiles/filter > .testfiles/got
-grep -v '$comp_a\|$comp_b\|$comp_c' .testfiles/expected | diff .testfiles/got -
+grep -v $comp_a'\|'$comp_b'\|'$comp_c .testfiles/expected | diff .testfiles/got -
 
 # test whitelisting
 
 UMBER_WHITELIST=$comp_a .testfiles/filter > .testfiles/got
-grep '$comp_a' .testfiles/expected | diff .testfiles/got -
+grep $comp_a .testfiles/expected | diff .testfiles/got -
 
 UMBER_WHITELIST=$comp_a:$comp_b .testfiles/filter > .testfiles/got
-grep '$comp_a\|$comp_b' .testfiles/expected | diff .testfiles/got -
+grep $comp_a'\|'$comp_b .testfiles/expected | diff .testfiles/got -
 
 UMBER_WHITELIST=$comp_a:$comp_b:$comp_c .testfiles/filter > .testfiles/got
-grep '$comp_a\|$comp_b\|$comp_c' .testfiles/expected | diff .testfiles/got -
+grep $comp_a'\|'$comp_b'\|'$comp_c .testfiles/expected | diff .testfiles/got -
 
 # test both at once (blacklist should take precedence)
 

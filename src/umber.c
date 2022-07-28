@@ -24,14 +24,22 @@
 // 'list' is a colon-separated (or otherwise if 'LIST_DELIM' is set) list of component names
 // returns true if 'component' is in said list, false otherwise
 
-static bool component_in_list(char* list, const char* component) {
+static bool component_in_list(const char* list, const char* component) {
+	char* dup_list = strdup(list);
+
+	if (!dup_list) {
+		return false;
+	}
+
 	char* tok;
 
-	while ((tok = strtok(list, LIST_DELIM))) {
+	while ((tok = strsep(&dup_list, LIST_DELIM))) {
 		if (!strcmp(tok, component)) {
 			return true;
 		}
 	}
+
+	free(dup_list);
 
 	return false;
 }
