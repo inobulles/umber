@@ -16,6 +16,8 @@
 #define GREY    "37m"
 
 void umber_log(umber_lvl_t lvl, const char* component, const char* path, const char* func, uint32_t line, char* msg) {
+	// check log level and compare it to 'UMBER_LVL' envvar
+
 	char* lvl_env = getenv("UMBER_LVL");
 	umber_lvl_t max_lvl = UMBER_LVL_SUCCESS;
 
@@ -30,6 +32,8 @@ void umber_log(umber_lvl_t lvl, const char* component, const char* path, const c
 	if (lvl > max_lvl) {
 		return;
 	}
+
+	// get information about the log level (colour, output stream, & level string)
 
 	char* lvl_str;
 	FILE* fp;
@@ -56,6 +60,8 @@ void umber_log(umber_lvl_t lvl, const char* component, const char* path, const c
 
 		#undef LVL_CASE
 	}
+
+	// actually log
 
 	fprintf(fp, BOLD "%s[%s %s -> %s:%d -> %s]" REGULAR "%s %s" CLEAR "\n",
 		colour, lvl_str, component, path, line, func, colour, msg);
