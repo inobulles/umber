@@ -1,8 +1,14 @@
 #include <umber.h>
 
 #include <stdarg.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+#if !defined(LIST_DELIM)
+	#define LIST_DELIM ":"
+#endif
 
 #define CLEAR   "\033[0m"
 #define REGULAR "\033[0;"
@@ -14,6 +20,21 @@
 #define GREEN   "32m"
 #define BLUE    "34m"
 #define GREY    "37m"
+
+// 'list' is a colon-separated (or otherwise if 'LIST_DELIM' is set) list of component names
+// returns true if 'component' is in said list, false otherwise
+
+static bool component_in_list(char* list, const char* component) {
+	char* tok;
+
+	while ((tok = strtok(list, LIST_DELIM))) {
+		if (!strcmp(tok, component)) {
+			return true;
+		}
+	}
+
+	return false;
+}
 
 void umber_log(umber_lvl_t lvl, const char* component, const char* path, const char* func, uint32_t line, char* msg) {
 	// check log level and compare it to 'UMBER_LVL' envvar
@@ -30,6 +51,20 @@ void umber_log(umber_lvl_t lvl, const char* component, const char* path, const c
 	}
 
 	if (lvl > max_lvl) {
+		return;
+	}
+
+	// check component filter (blacklist/whitelist/nothing)
+	// these different filter types are mutually exclusive; you can't have a blacklist & a whitelist at the same time, that would be perposterous, even silly!
+
+	char* whitelist = getenv("UMBER_WHITELIST");
+	char* blacklist = getenv("UMBER_BLACKLIST");
+
+	if (whitelist && !component_in_list(whitelist, component)) {
+		return;
+	}
+
+	else if (blacklist && component_in_list(blacklist, component)) {
 		return;
 	}
 
