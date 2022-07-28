@@ -63,7 +63,7 @@ void umber_log(umber_lvl_t lvl, const char* component, const char* path, const c
 	}
 
 	// check component filter (blacklist/whitelist/nothing)
-	// these different filter types are mutually exclusive; you can't have a blacklist & a whitelist at the same time, that would be perposterous, even silly!
+	// these different filter types are mutually exclusive; you can't have a blacklist & a whitelist at the same time, that would be preposterous, even silly!
 
 	char* whitelist = getenv("UMBER_WHITELIST");
 	char* blacklist = getenv("UMBER_BLACKLIST");
