@@ -12,7 +12,7 @@ $ sh build.sh
 
 This will compile the library, run a few tests, and install it to `/usr/local/lib` (`/usr/local/include` for the `umber.h` header).
 
-## Usage
+## Basic usage
 
 To use Umber in your project, include the `umber.h` header and define `UMBER_COMPONENT` with the name of the component it's meant to cover:
 
@@ -24,7 +24,7 @@ To use Umber in your project, include the `umber.h` header and define `UMBER_COM
 When compiling your program, you can link Umber as such:
 
 ```console
-$ cc the-fitness-gram-pacer-test.c -lumber
+cc the-fitness-gram-pacer-test.c -lumber
 ```
 
 (Notice the subtle play on words, which is difficult to notice; indeed, "Lumber" refers to processed wood, wood which is also what logs are made of.)
@@ -39,7 +39,7 @@ The header provides the following macros you can use for various log levels:
 |`LOG_INFO`   |4    |`stdout`    |The component is doing something|
 |`LOG_VERBOSE`|5    |`stdout`    |Extremely detailed information about what the component is currently doing|
 
-These definitions are a bit vague; the way you use these macros is mostly up to your own common sense.
+These definitions are intentionally left a bit vague; the way you use these macros is mostly up to your own common sense.
 The logging macros may be called as such:
 
 ```c
@@ -65,3 +65,21 @@ The output of this program is the following:
 You set the `UMBER_LVL` environment variable to show more or less log messages (default is 3, here's an example with `UMBER_LVL=5` and without the segfault lol):
 
 ![The Fitness Gram™ Pacer Test](pics/lvl-out.png)
+
+## Component filtering
+
+Using the `UMBER_BLACKLIST` & `UMBER_WHITELIST` environment variables, you may filter out specific components to see things a little clearer or ease debugging problems in specific components (#5).
+These environment variables take in a colon-separated list of components to either whitelist (exclusively show) or blacklist (hide) log entries coming from said components:
+
+```console
+UMBER_BLACKLIST=the:fitness program # blacklist components "the" & "fitness", i.e. ignore all log entries coming from those components
+UMBER_WHITELIST=gram:pacer program # whitelist components "gram" & "pacer", i.e. only show log entries coming from those components
+```
+
+If both a whitelist and a blacklist are supplied, the blacklist takes precedence:
+
+```components
+UMBER_BLACKLIST=test UMBER_WHITELIST=test:tm program # blacklist component "test" only
+```
+
+Thank you for coming to my TED Talk.

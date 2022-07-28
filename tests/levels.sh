@@ -7,7 +7,6 @@ set -e
 
 component=$(openssl rand -base64 6)
 src_path=tests/levels.c
-func_name=_$(openssl rand -hex 6)
 
 test_str=$(openssl rand -base64 6)
 test_fmt="$test_str %s"
