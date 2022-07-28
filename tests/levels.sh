@@ -1,11 +1,12 @@
 #!/bin/sh
 set -e
 
+. tests/common.sh
+
 # build the example we'll be testing on
 
 component=$(openssl rand -base64 6)
 src_path=tests/levels.c
-func_name=_$(openssl rand -hex 6)
 
 test_str=$(openssl rand -base64 6)
 test_fmt="$test_str %s"
@@ -14,17 +15,6 @@ test_arg=$(openssl rand -base64 6)
 cc -std=c99 $src_path -DCOMPONENT=\"$component\" -DFUNC_NAME=$func_name -DTEST_FMT=\""$test_fmt"\" -DTEST_ARG=\"$test_arg\" -I src -L bin -lumber -o .testfiles/levels
 
 # test all the log levels
-
-clear_="\033[0m"
-regular="\033[0;"
-bold="\033[1;"
-
-purple="35m"
-red="31m"
-yellow="33m"
-green="32m"
-blue="34m"
-grey="37m"
 
 printf "$bold$purple[FATAL $component -> $src_path:5 -> $func_name]$regular$purple $test_str $test_arg$clear_
 $bold$red[ERROR $component -> $src_path:6 -> $func_name]$regular$red $test_str $test_arg$clear_
