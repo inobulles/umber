@@ -1,11 +1,12 @@
 #!/bin/sh
 set -e
 
+. tests/common.sh
+
 # build the example we'll be testing on
 # would have like to use some kind of dynamic variables thing but what the heck, ain't nobody got time to test this on the 50 different shells which may be linked to '/bin/sh'
 
 src_path=tests/filter.c
-func_name=_$(openssl rand -hex 6)
 
 comp_a=$(openssl rand -base64 6)
 comp_b=$(openssl rand -base64 6)
@@ -31,12 +32,6 @@ unset UMBER_WHITELIST
 export UMBER_LVL=5
 
 # expected output
-
-clear_="\033[0m"
-regular="\033[0;"
-bold="\033[1;"
-
-grey="37m"
 
 printf "$bold$grey[VERBOSE $comp_a -> $src_path:5 -> $func_name]$regular$grey $spec_a$clear_
 $bold$grey[VERBOSE $comp_b -> $src_path:9 -> $func_name]$regular$grey $spec_b$clear_
