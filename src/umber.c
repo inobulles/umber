@@ -44,7 +44,7 @@ static bool component_in_list(char const* list, char const* component) {
 	return false;
 }
 
-void umber_log(umber_lvl_t lvl, char const* component, char const* path, char const* func, uint32_t line, char const* msg) {
+void umber_log(umber_lvl_t const lvl, char const* const component, char const* const path, char const* const func, uint32_t const line, char const* const msg) {
 	// check log level and compare it to 'UMBER_LVL' envvar
 
 	char* const lvl_env = getenv("UMBER_LVL");
@@ -111,7 +111,7 @@ void umber_log(umber_lvl_t lvl, char const* component, char const* path, char co
 }
 
 __attribute__((__format__(__printf__, 6, 0)))
-void umber_vlog(umber_lvl_t lvl, char const* component, char const* path, char const* func, uint32_t line, char const* fmt, ...) {
+void umber_vlog(umber_lvl_t const lvl, char const* const component, char const* const path, char const* const func, uint32_t const line, char const* const fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
