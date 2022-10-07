@@ -24,7 +24,7 @@
 // 'list' is a colon-separated (or otherwise if 'LIST_DELIM' is set) list of component names
 // returns true if 'component' is in said list, false otherwise
 
-static bool component_in_list(const char* list, const char* component) {
+static bool component_in_list(char const* list, char const* component) {
 	char* dup_list = strdup(list);
 
 	if (!dup_list) {
@@ -44,10 +44,10 @@ static bool component_in_list(const char* list, const char* component) {
 	return false;
 }
 
-void umber_log(umber_lvl_t lvl, const char* component, const char* path, const char* func, uint32_t line, char* msg) {
+void umber_log(umber_lvl_t lvl, char const* component, char const* path, char const* func, uint32_t line, char const* msg) {
 	// check log level and compare it to 'UMBER_LVL' envvar
 
-	char* lvl_env = getenv("UMBER_LVL");
+	char* const lvl_env = getenv("UMBER_LVL");
 	umber_lvl_t max_lvl = UMBER_LVL_SUCCESS;
 
 	if (
@@ -65,8 +65,8 @@ void umber_log(umber_lvl_t lvl, const char* component, const char* path, const c
 	// check component filter (blacklist/whitelist/nothing)
 	// these different filter types are mutually exclusive; you can't have a blacklist & a whitelist at the same time, that would be preposterous, even silly!
 
-	char* whitelist = getenv("UMBER_WHITELIST");
-	char* blacklist = getenv("UMBER_BLACKLIST");
+	char* const whitelist = getenv("UMBER_WHITELIST");
+	char* const blacklist = getenv("UMBER_BLACKLIST");
 
 	if (whitelist && !component_in_list(whitelist, component)) {
 		return;
@@ -111,7 +111,7 @@ void umber_log(umber_lvl_t lvl, const char* component, const char* path, const c
 }
 
 __attribute__((__format__(__printf__, 6, 0)))
-void umber_vlog(umber_lvl_t lvl, const char* component, const char* path, const char* func, uint32_t line, char* fmt, ...) {
+void umber_vlog(umber_lvl_t lvl, char const* component, char const* path, char const* func, uint32_t line, char const* fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 

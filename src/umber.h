@@ -14,10 +14,10 @@ typedef enum {
 	UMBER_LVL_VERBOSE,
 } umber_lvl_t;
 
-void umber_log(umber_lvl_t lvl, const char* component, const char* path, const char* func, uint32_t line, char* msg);
+void umber_log(umber_lvl_t lvl, char const* component, char const* path, char const* func, uint32_t line, char const* msg);
 
 __attribute__((__format__(__printf__, 6, 0)))
-void umber_vlog(umber_lvl_t lvl, const char* component, const char* path, const char* func, uint32_t line, char* fmt, ...);
+void umber_vlog(umber_lvl_t lvl, char const* component, char const* path, char const* func, uint32_t line, char const* fmt, ...);
 
 // helper macros
 
