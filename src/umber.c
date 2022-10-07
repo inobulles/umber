@@ -118,6 +118,11 @@ void umber_vlog(umber_lvl_t lvl, const char* component, const char* path, const 
 	char* msg;
 	vasprintf(&msg, fmt, args);
 
+	if (!msg) {
+		umber_log(UMBER_LVL_FATAL, "umber", __FILE__, __func__, __LINE__, "Failed to allocate space for log message");
+		return;
+	}
+
 	va_end(args);
 
 	umber_log(lvl, component, path, func, line, msg);
