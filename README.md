@@ -4,13 +4,11 @@ Logging library for everything in the AQUA ecosystem.
 
 ## Building
 
-On most Unix-like operating systems, build with:
+With [Bob the Builder](https://github.com/inobulles/bob) installed:
 
 ```console
-sh build.sh
+bob install
 ```
-
-This will compile the library, run a few tests, and install it to `/usr/local/lib` (`/usr/local/include` for the `umber.h` header).
 
 ## Basic usage
 
