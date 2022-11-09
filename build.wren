@@ -7,6 +7,8 @@ cc.add_opt("-Isrc")
 cc.add_opt("-fPIC")
 cc.add_opt("-std=c99")
 cc.add_opt("-Wall")
+cc.add_opt("-Wextra")
+cc.add_opt("-Werror")
 
 var src = File.list("src")
 	.where { |path| path.endsWith(".c") }
