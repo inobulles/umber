@@ -18,5 +18,5 @@ src
 
 var linker = Linker.new(cc)
 
-linker.archive(src.toList, "bin/libumber.a")
-linker.link(src.toList, "bin/libumber.so", true)
+linker.archive(src.toList, "libumber.a")
+linker.link(src.toList, "libumber.so", true)
