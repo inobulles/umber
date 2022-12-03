@@ -22,3 +22,9 @@ var linker = Linker.new(cc)
 
 linker.archive(src.toList, "libumber.a")
 linker.link(src.toList, [], "libumber.so", true)
+
+// copy over headers
+
+File.list("src")
+	.where { |path| path.endsWith(".h") }
+	.each  { |path| Resources.install(path) }
