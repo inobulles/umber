@@ -42,9 +42,13 @@ var install = {
 // TODO testing
 
 class Tests {
+	static filter {
+		return File.exec("test.sh")
+	}
+
 	static levels {
 		return File.exec("test.sh")
 	}
 }
 
-var tests = ["levels"]
+var tests = ["filter", "levels"]
