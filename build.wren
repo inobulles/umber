@@ -28,3 +28,13 @@ linker.link(src.toList, [], "libumber.so", true)
 File.list("src")
 	.where { |path| path.endsWith(".h") }
 	.each  { |path| Resources.install(path) }
+
+// installation map
+
+var prefix = "/usr/local" // TODO way to discriminate between OS' - on Linux distros, this would usually be simply "/usr" instead
+
+var install = {
+	"libumber.a":  "%(prefix)/lib/libumber.a",
+	"libumber.so": "%(prefix)/lib/libumber.so",
+	"umber.h":     "%(prefix)/include/umber.h",
+}
