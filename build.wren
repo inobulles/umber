@@ -42,6 +42,9 @@ var install = {
 // TODO testing
 
 class Tests {
+	static levels {
+		return File.exec("test.sh")
+	}
 }
 
-var tests = []
+var tests = ["levels"]
