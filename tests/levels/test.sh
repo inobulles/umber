@@ -23,7 +23,9 @@ test_str=$(openssl rand -base64 6)
 test_fmt="$test_str %s"
 test_arg=$(openssl rand -base64 6)
 
-cc -std=c99 $src_path -DCOMPONENT=\"$component\" -DFUNC_NAME=$func_name -DTEST_FMT=\""$test_fmt"\" -DTEST_ARG=\"$test_arg\" -I. -lumber -o levels
+cc -std=c99 $src_path -I. -L. -lumber -o levels \
+	-DCOMPONENT=\"$component\" -DFUNC_NAME=$func_name \
+	-DTEST_FMT=\""$test_fmt"\" -DTEST_ARG=\"$test_arg\"
 
 # test all the log levels
 
