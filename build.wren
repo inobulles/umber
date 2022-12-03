@@ -38,3 +38,10 @@ var install = {
 	"libumber.so": "%(prefix)/lib/libumber.so",
 	"umber.h":     "%(prefix)/include/umber.h",
 }
+
+// TODO testing
+
+class Tests {
+}
+
+var tests = []
