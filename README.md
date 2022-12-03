@@ -7,7 +7,7 @@ Logging library for everything in the AQUA ecosystem.
 With [Bob the Builder](https://github.com/inobulles/bob) installed:
 
 ```console
-bob install
+bob test install
 ```
 
 ## Basic usage
