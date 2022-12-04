@@ -31,15 +31,13 @@ File.list("src")
 
 // installation map
 
-var prefix = "/usr/local" // TODO way to discriminate between OS' - on Linux distros, this would usually be simply "/usr" instead
-
 var install = {
-	"libumber.a":  "%(prefix)/lib/libumber.a",
-	"libumber.so": "%(prefix)/lib/libumber.so",
-	"umber.h":     "%(prefix)/include/umber.h",
+	"libumber.a":  "%(OS.prefix())/lib/libumber.a",
+	"libumber.so": "%(OS.prefix())/lib/libumber.so",
+	"umber.h":     "%(OS.prefix())/include/umber.h",
 }
 
-// TODO testing
+// testing
 
 class Tests {
 	static filter {
