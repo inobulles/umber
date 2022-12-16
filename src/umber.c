@@ -116,7 +116,6 @@ void umber_log(umber_lvl_t const lvl, char const* const component, char const* c
 		colour, lvl_str, component, path, line, func, colour, msg);
 }
 
-__attribute__((__format__(__printf__, 6, 0)))
 void umber_vlog(umber_lvl_t const lvl, char const* const component, char const* const path, char const* const func, uint32_t const line, char const* const fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
