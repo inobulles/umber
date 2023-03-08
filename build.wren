@@ -2,7 +2,7 @@
 
 var cc = CC.new()
 
-cc.add_opt("-I/usr/local/include")
+cc.add_opt("-isystem=/usr/local/include")
 cc.add_opt("-Isrc")
 cc.add_opt("-fPIC")
 cc.add_opt("-std=c99")
