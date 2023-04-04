@@ -80,4 +80,4 @@ If both a whitelist and a blacklist are supplied, the blacklist takes precedence
 UMBER_BLACKLIST=test UMBER_WHITELIST=test:tm program # blacklist component "test" only
 ```
 
-Thank you for coming to my TED Talk.
+Thank you for attending my TED Talk.
