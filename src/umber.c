@@ -37,16 +37,14 @@
 static bool component_in_list(char const* list, char const* component) {
 	char* dup_list = strdup(list);
 
-	if (!dup_list) {
+	if (!dup_list)
 		return false;
-	}
 
 	char* tok;
 
 	while ((tok = strsep(&dup_list, LIST_DELIM))) {
-		if (!strcmp(tok, component)) {
+		if (!strcmp(tok, component))
 			return true;
-		}
 	}
 
 	free(dup_list);
@@ -64,13 +62,11 @@ void umber_log(umber_lvl_t const lvl, char const* const component, char const* c
 		lvl_env &&
 		*lvl_env >= '0' + UMBER_LVL_FATAL &&
 		*lvl_env <= '0' + UMBER_LVL_VERBOSE
-	) {
+	)
 		max_lvl = *lvl_env - '0';
-	}
 
-	if (lvl > max_lvl) {
+	if (lvl > max_lvl)
 		return;
-	}
 
 	// check component filter (blacklist/whitelist/nothing)
 	// these different filter types are mutually exclusive; you can't have a blacklist & a whitelist at the same time, that would be preposterous, even silly!
@@ -78,13 +74,11 @@ void umber_log(umber_lvl_t const lvl, char const* const component, char const* c
 	char* const whitelist = getenv("UMBER_WHITELIST");
 	char* const blacklist = getenv("UMBER_BLACKLIST");
 
-	if (whitelist && !component_in_list(whitelist, component)) {
+	if (whitelist && !component_in_list(whitelist, component))
 		return;
-	}
 
-	else if (blacklist && component_in_list(blacklist, component)) {
+	else if (blacklist && component_in_list(blacklist, component))
 		return;
-	}
 
 	// get information about the log level (colour, output stream, & level string)
 
