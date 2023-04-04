@@ -12,6 +12,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#if !defined(PATH_TRUNCATION_LEN)
+	#define PATH_TRUNCATION_LEN 30
+#endif
+
 #if !defined(LIST_DELIM)
 	#define LIST_DELIM ":"
 #endif
@@ -110,10 +114,27 @@ void umber_log(umber_lvl_t const lvl, char const* const component, char const* c
 		#undef LVL_CASE
 	}
 
+	// truncate file path
+
+	char const* truncated_path = path;
+	size_t len = strlen(path);
+
+	while (len > PATH_TRUNCATION_LEN) {
+		char const* const new_path = strchr(truncated_path, '/');
+
+		if (!new_path)
+			break;
+
+		truncated_path = new_path + 1;
+		len = strlen(truncated_path);
+	}
+
 	// actually log
 
-	fprintf(fp, BOLD "%s[%s %s -> %s:%d -> %s]" REGULAR "%s %s" CLEAR "\n",
-		colour, lvl_str, component, path, line, func, colour, msg);
+	char const* const elipsis = truncated_path == path ? "" : ".../";
+
+	fprintf(fp, BOLD "%s[%s %s -> %s%s:%d -> %s]" REGULAR "%s %s" CLEAR "\n",
+		colour, lvl_str, component, elipsis, truncated_path, line, func, colour, msg);
 }
 
 void umber_vlog(umber_lvl_t const lvl, char const* const component, char const* const path, char const* const func, uint32_t const line, char const* const fmt, ...) {
