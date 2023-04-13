@@ -20,8 +20,6 @@ src
 
 var linker = Linker.new()
 
-File.exec("/bin/sleep", ["5"]) // XXX temporarily, linker object has no way of waiting for compilation processes
-
 linker.archive(src.toList, "libumber.a")
 linker.link(src.toList, [], "libumber.so", true)
 
