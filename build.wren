@@ -18,7 +18,7 @@ src
 
 // create static & dynamic libraries
 
-var linker = Linker.new(cc)
+var linker = Linker.new()
 
 linker.archive(src.toList, "libumber.a")
 linker.link(src.toList, [], "libumber.so", true)
