@@ -32,9 +32,9 @@ File.list("src")
 // installation map
 
 var install = {
-	"libumber.a":  "%(Meta.prefix())/lib/libumber.a",
-	"libumber.so": "%(Meta.prefix())/lib/libumber.so",
-	"umber.h":     "%(Meta.prefix())/include/umber.h",
+	"libumber.a":  "lib/libumber.a",
+	"libumber.so": "lib/libumber.so",
+	"umber.h":     "include/umber.h",
 }
 
 // testing
