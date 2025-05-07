@@ -135,9 +135,9 @@ void umber_log(umber_lvl_t const lvl, char const* const component, char const* c
 
 	// actually log
 
-	char const* const elipsis = truncated_path == path ? "" : ".../";
+	char const* const ellipsis = truncated_path == path ? "" : ".../";
 
-	fprintf(fp, BOLD "%s[%s %s -> %s%s:%d -> %s]" REGULAR "%s %s" CLEAR "\n", colour, lvl_str, component, elipsis, truncated_path, line, func, colour, msg);
+	fprintf(fp, BOLD "%s[%s %s -> %s%s:%d -> %s]" REGULAR "%s %s" CLEAR "\n", colour, lvl_str, component, ellipsis, truncated_path, line, func, colour, msg);
 }
 
 void umber_vlog(umber_lvl_t const lvl, char const* const component, char const* const path, char const* const func, uint32_t const line, char const* const fmt, ...) {
