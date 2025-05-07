@@ -31,7 +31,7 @@ if [ "$(uname)" = "Darwin" ]; then
 	rpath="-rpath /usr/local"
 fi
 
-cc -std=c99 $src_path $rpath -lumber -o filter \
+cc -std=c99 $src_path $rpath -lumber -I/usr/local/include -o filter \
 	-DFUNC_NAME=$func_name \
 	-DCOMP_A=\"$comp_a\" -DSPEC_A=\"$spec_a\" \
 	-DCOMP_B=\"$comp_b\" -DSPEC_B=\"$spec_b\" \

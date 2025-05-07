@@ -1,5 +1,5 @@
 #!/bin/sh
-set -ex
+set -e
 
 clear_="\033[0m"
 regular="\033[0;"
@@ -27,7 +27,7 @@ if [ "$(uname)" = "Darwin" ]; then
 	rpath="-rpath /usr/local"
 fi
 
-cc -std=c99 $src_path $rpath -lumber -o levels \
+cc -std=c99 $src_path $rpath -lumber -I/usr/local/include -o levels \
 	-DCOMPONENT=\"$component\" -DFUNC_NAME=$func_name \
 	-DTEST_FMT=\""$test_fmt"\" -DTEST_ARG=\"$test_arg\"
 
