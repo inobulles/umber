@@ -4,13 +4,18 @@ task:
     image: gcc:latest
   env:
     CLICOLOR_FORCE:
-  bob_script:
-    - git clone https://github.com/inobulles/bob --depth 1 --branch main
-    - ( cd bob && sh build.sh && sh-bin/bob install )
+    ASAN_OPTIONS: detect_leaks=0
+    LD_LIBRARY_PATH: /usr/local/lib
+  bootstrap_script:
+    - git clone https://github.com/inobulles/bob --depth 1 --branch v0.2.16
+    - ( cd bob && sh bootstrap.sh && .bootstrap/bob install )
   build_script:
-    - bob test install
+    - bob install
+  test_script:
+    - sh tests/levels/test.sh
+    - sh tests/filter/test.sh
   amd64_artifacts:
-    path: "bin/*"
+    path: ".bob/prefix/*"
 
 task:
   timeout_in: 5m
@@ -18,10 +23,15 @@ task:
     image: gcc:latest
   env:
     CLICOLOR_FORCE:
-  bob_script:
-    - git clone https://github.com/inobulles/bob --depth 1 --branch main
-    - ( cd bob && sh build.sh && sh-bin/bob install )
+    ASAN_OPTIONS: detect_leaks=0
+    LD_LIBRARY_PATH: /usr/local/lib
+  bootstrap_script:
+    - git clone https://github.com/inobulles/bob --depth 1 --branch v0.2.16
+    - ( cd bob && sh bootstrap.sh && .bootstrap/bob install )
   build_script:
-    - bob test install
-  arm64_artifacts:
-    path: "bin/*"
+    - bob install
+  test_script:
+    - sh tests/levels/test.sh
+    - sh tests/filter/test.sh
+  amd64_artifacts:
+    path: ".bob/prefix/*"

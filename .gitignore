@@ -1,4 +1,3 @@
-bin
-.testfiles
 *.core
 *.sw[op]
+.bob

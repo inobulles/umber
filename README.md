@@ -7,7 +7,15 @@ Logging library for everything in the AQUA ecosystem.
 With [Bob the Builder](https://github.com/inobulles/bob) installed:
 
 ```console
-bob test install
+bob install
+```
+
+You can also depend on this library in another Bob project without having to install it by adding it to your dependencies list:
+
+```py
+deps = [
+	Dep.git("https://github.com/inobulles/umber", "v0.2.0"),
+]
 ```
 
 ## Basic usage
@@ -30,12 +38,12 @@ The header provides the following macros you can use for various log levels:
 
 |Macro        |Level|POSIX stream|Description|
 |-------------|-----|------------|-----------|
-|`LOG_FATAL`  |0    |`stderr`    |An error occurred which prevents the component from continuing operation|
-|`LOG_ERROR`  |1    |`stderr`    |An error occurred which may impair some of the component's functionality|
-|`LOG_WARN`   |2    |`stderr`    |Something is not necessarily wrong, but is a bit unexpected|
-|`LOG_SUCCESS`|3    |`stdout`    |The component executed a large operation successfully|
-|`LOG_INFO`   |4    |`stdout`    |The component is doing something|
-|`LOG_VERBOSE`|5    |`stdout`    |Extremely detailed information about what the component is currently doing|
+|`LOG_FATAL`  |0    |`stderr`    |An error occurred which prevents the component from continuing operation.|
+|`LOG_ERROR`  |1    |`stderr`    |An error occurred which may impair some of the component's functionality.|
+|`LOG_WARN`   |2    |`stderr`    |Something is not necessarily wrong, but is a bit unexpected.|
+|`LOG_SUCCESS`|3    |`stdout`    |The component executed a large operation successfully.|
+|`LOG_INFO`   |4    |`stdout`    |The component is doing something.|
+|`LOG_VERBOSE`|5    |`stdout`    |Extremely detailed information about what the component is currently doing.|
 
 These definitions are intentionally left a bit vague; the way you use these macros is mostly up to your own common sense.
 The logging macros may be called as such:
@@ -45,12 +53,12 @@ The logging macros may be called as such:
 #define UMBER_COMPONENT "The Fitness Gram™ Pacer Test"
 
 int main(void) {
-	LOG_FATAL("Oh the humanity")
-	LOG_ERROR("Oh the misery")
-	LOG_WARN("Oh the shame")
-	LOG_SUCCESS("OHHHHHHHH")
-	LOG_INFO("Oh there's my wine toaster")
-	LOG_VERBOSE("Oh, a butterfly - by the way, my favourite number is %d", *(volatile int*) 0)
+	LOG_FATAL("Oh the humanity");
+	LOG_ERROR("Oh the misery");
+	LOG_WARN("Oh the shame");
+	LOG_SUCCESS("OHHHHHHHH");
+	LOG_INFO("Oh there's my wine toaster");
+	LOG_VERBOSE("Oh, a butterfly - by the way, my favourite number is %d", *(volatile int*) 0);
 
 	return 0;
 }

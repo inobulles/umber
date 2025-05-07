@@ -17,13 +17,17 @@ func_name=_$(openssl rand -hex 6)
 # build the example we'll be testing on
 
 component=$(openssl rand -base64 6)
-src_path=levels.c
+src_path=tests/levels/levels.c
 
 test_str=$(openssl rand -base64 6)
 test_fmt="$test_str %s"
 test_arg=$(openssl rand -base64 6)
 
-cc -std=c99 $src_path -I. -L. -lumber -o levels \
+if [ "$(uname)" = "Darwin" ]; then
+	rpath="-rpath /usr/local"
+fi
+
+cc -std=c99 $src_path $rpath -lumber -I/usr/local/include -o levels \
 	-DCOMPONENT=\"$component\" -DFUNC_NAME=$func_name \
 	-DTEST_FMT=\""$test_fmt"\" -DTEST_ARG=\"$test_arg\"
 
