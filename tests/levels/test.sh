@@ -23,7 +23,11 @@ test_str=$(openssl rand -base64 6)
 test_fmt="$test_str %s"
 test_arg=$(openssl rand -base64 6)
 
-cc -std=c99 $src_path -rpath /usr/local -lumber -o levels \
+if [ "$(uname)" = "Darwin" ]; then
+	rpath="-rpath /usr/local"
+fi
+
+cc -std=c99 $src_path $rpath -lumber -o levels \
 	-DCOMPONENT=\"$component\" -DFUNC_NAME=$func_name \
 	-DTEST_FMT=\""$test_fmt"\" -DTEST_ARG=\"$test_arg\"
 

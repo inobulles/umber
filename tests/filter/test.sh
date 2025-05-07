@@ -27,7 +27,11 @@ spec_a=$(openssl rand -base64 6)
 spec_b=$(openssl rand -base64 6)
 spec_c=$(openssl rand -base64 6)
 
-cc -std=c99 $src_path -rpath /usr/local -lumber -o filter \
+if [ "$(uname)" = "Darwin" ]; then
+	rpath="-rpath /usr/local"
+fi
+
+cc -std=c99 $src_path $rpath -lumber -o filter \
 	-DFUNC_NAME=$func_name \
 	-DCOMP_A=\"$comp_a\" -DSPEC_A=\"$spec_a\" \
 	-DCOMP_B=\"$comp_b\" -DSPEC_B=\"$spec_b\" \
