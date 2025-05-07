@@ -17,7 +17,7 @@ func_name=_$(openssl rand -hex 6)
 # build the example we'll be testing on
 # would have like to use some kind of dynamic variables thing but what the heck, ain't nobody got time to test this on the 50 different shells which may be linked to '/bin/sh'
 
-src_path=filter.c
+src_path=tests/filter/filter.c
 
 comp_a=$(openssl rand -base64 6)
 comp_b=$(openssl rand -base64 6)
@@ -27,7 +27,7 @@ spec_a=$(openssl rand -base64 6)
 spec_b=$(openssl rand -base64 6)
 spec_c=$(openssl rand -base64 6)
 
-cc -std=c99 $src_path -I. -L. -lumber -o filter \
+cc -std=c99 $src_path -rpath /usr/local -lumber -o filter \
 	-DFUNC_NAME=$func_name \
 	-DCOMP_A=\"$comp_a\" -DSPEC_A=\"$spec_a\" \
 	-DCOMP_B=\"$comp_b\" -DSPEC_B=\"$spec_b\" \
