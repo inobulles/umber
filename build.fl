@@ -1,0 +1,23 @@
+# This Source Form is subject to the terms of the AQUA Software License,
+# v. 1.0. Copyright (c) 2025 Aymeric Wibo
+
+import bob
+
+let src = ["src/umber.c"]
+
+let obj = Cc([
+	"-std=c99", "-g",
+	"-Wall", "-Wextra", "-Werror",
+	"-fPIC",
+]).compile(src)
+
+let dyn_lib = Linker(["-shared"]).link(obj)
+let static_lib = Linker([]).archive(obj)
+
+install = {
+	dyn_lib: "lib/libumber.so",
+	static_lib: "lib/libumber.a",
+	"src/umber.h": "include/umber.h",
+}
+
+run = none
