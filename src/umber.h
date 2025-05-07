@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2022-2025 Aymeric Wibo
+
 #undef UMBER_COMPONENT // force user to define this after header inclusion
 
 #if !defined(__UMBER__)
