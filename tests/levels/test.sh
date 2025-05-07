@@ -1,5 +1,5 @@
 #!/bin/sh
-set -e
+set -ex
 
 clear_="\033[0m"
 regular="\033[0;"
