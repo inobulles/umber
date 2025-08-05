@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2022-2025 Aymeric Wibo
 
-#undef UMBER_COMPONENT // Force user to define this after header inclusion.
 #pragma once
 
 #include <stdint.h>
@@ -48,6 +47,45 @@ typedef enum {
 	 */
 	UMBER_LVL_VERBOSE,
 } umber_lvl_t;
+
+/**
+ * Maximum size for logging class names.
+ */
+#define UMBER_CLASS_NAME_MAX 32
+
+/**
+ * Maximum size for logging class descriptions.
+ */
+#define UMBER_CLASS_DESCRIPTION_MAX 128
+
+/**
+ * Logging class struct.
+ *
+ * A logging class groups logs together by common theme, e.g. so a user can filter out noisy verbose logs from a main loop but can keep them for initialization code.
+ */
+typedef struct umber_class_t umber_class_t;
+
+/**
+ * Create a new logging class.
+ *
+ * The name is meant to be the class' fully-qualified name, e.g. aqua.gvd.elp.
+ * This name may not contain any ',', '=', or '*' characters.
+ * The description is meant to be a short description of the class, e.g. "ELP sender.".
+ * The default log level is the class' log level before user filtering, i.e. logs with levels lower or equal to this associated to this class will be logged by default.
+ *
+ * As long as you don't introduce a memory leak, you don't have to free this memory.
+ * If you want/need to anyway, you can just use {@link free} on the returned pointer.
+ *
+ * @param name The class' fully-qualified name.
+ * @param default_lvl The class' default log level.
+ * @param description The class' description.
+ * @return A pointer to the new logging class.
+ */
+umber_class_t* umber_class_new(
+	char const name[UMBER_CLASS_NAME_MAX],
+	umber_lvl_t default_lvl,
+	char const description[UMBER_CLASS_DESCRIPTION_MAX]
+);
 
 /**
  * Log a message.
