@@ -34,6 +34,105 @@
 #define BLUE "34m"
 #define GREY "37m"
 
+struct umber_class_t {
+	char name[UMBER_CLASS_NAME_MAX];
+	char description[UMBER_CLASS_DESCRIPTION_MAX];
+	umber_lvl_t default_lvl;
+	umber_lvl_t lvl;
+};
+
+umber_class_t* umber_class_new(
+	char const name[UMBER_CLASS_NAME_MAX],
+	umber_lvl_t default_lvl,
+	char const description[UMBER_CLASS_DESCRIPTION_MAX]
+) {
+	// Validate name.
+
+	for (size_t i = 0; i < UMBER_CLASS_NAME_MAX - 1 && name[i] != '\0'; i++) {
+		if (name[i] == ',' || name[i] == '=') {
+			return NULL;
+		}
+	}
+
+	// Create class.
+
+	umber_class_t* const c = malloc(sizeof(umber_class_t));
+
+	if (c == NULL) {
+		return NULL;
+	}
+
+	strncpy(c->name, name, sizeof c->name - 1);
+	strncpy(c->description, description, sizeof c->description - 1);
+	c->default_lvl = default_lvl;
+
+	// Check UMBER_LVL environment variable and set the log level accordingly.
+
+	c->lvl = default_lvl;
+	char* const lvl_env = getenv("UMBER_LVL");
+
+	if (lvl_env == NULL) {
+		return c;
+	}
+
+	char* dup_lvl_env = strdup(lvl_env);
+	char* tok;
+
+	while ((tok = strsep(&dup_lvl_env, ",")) != NULL) {
+		char* const eq = strchr(tok, '=');
+		*eq = '\0';
+
+		char const* const tok_name = tok;
+		char const* const tok_lvl = eq + 1;
+
+		bool const globbed_end = *(eq - 1) == '*';
+
+		if (!globbed_end && strcmp(tok_name, c->name) != 0) {
+			continue;
+		}
+
+		if (globbed_end && strncmp(tok_name, c->name, strlen(tok_name) - 1) != 0) {
+			continue;
+		}
+
+		// Past this point, we know that the component name matches.
+
+		switch (*tok_lvl) {
+		case '\0':
+			c->lvl = c->default_lvl;
+			break;
+		case '0':
+		case 'f':
+			c->lvl = UMBER_LVL_FATAL;
+			break;
+		case '1':
+		case 'e':
+			c->lvl = UMBER_LVL_ERROR;
+			break;
+		case '2':
+		case 'w':
+			c->lvl = UMBER_LVL_WARN;
+			break;
+		case '3':
+		case 's':
+			c->lvl = UMBER_LVL_SUCCESS;
+			break;
+		case '4':
+		case 'i':
+			c->lvl = UMBER_LVL_INFO;
+			break;
+		case '5':
+		case 'v':
+			c->lvl = UMBER_LVL_VERBOSE;
+			break;
+		default:
+			continue;
+		}
+	}
+
+	return c;
+}
+
 // 'list' is a colon-separated (or otherwise if 'LIST_DELIM' is set) list of component names
 // returns true if 'component' is in said list, false otherwise
 
