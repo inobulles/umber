@@ -19,10 +19,6 @@
 # define PATH_TRUNCATION_LEN 30
 #endif
 
-#if !defined(LIST_DELIM)
-# define LIST_DELIM ":"
-#endif
-
 #define CLEAR "\033[0m"
 #define REGULAR "\033[0;"
 #define BOLD "\033[1;"
@@ -41,9 +37,9 @@ struct umber_class_t {
 	umber_lvl_t lvl;
 };
 
-umber_class_t* umber_class_new(
+umber_class_t const* umber_class_new(
 	char const name[UMBER_CLASS_NAME_MAX],
-	umber_lvl_t default_lvl,
+	umber_lvl_t const default_lvl,
 	char const description[UMBER_CLASS_DESCRIPTION_MAX]
 ) {
 	// Validate name.
@@ -95,7 +91,7 @@ umber_class_t* umber_class_new(
 			continue;
 		}
 
-		// Past this point, we know that the component name matches.
+		// Past this point, we know that the class name matches.
 
 		switch (*tok_lvl) {
 		case '\0':
@@ -133,62 +129,20 @@ umber_class_t* umber_class_new(
 	return c;
 }
 
-// 'list' is a colon-separated (or otherwise if 'LIST_DELIM' is set) list of component names
-// returns true if 'component' is in said list, false otherwise
+void umber_log(
+	umber_class_t const* const cls,
+	umber_lvl_t const lvl,
+	char const* const path,
+	uint32_t const line,
+	char const* const msg
+) {
+	// Drop message if the log level is lower than the class's log level.
 
-static bool component_in_list(char const* list, char const* component) {
-	char* dup_list = strdup(list);
-
-	if (!dup_list) {
-		return false;
-	}
-
-	char* tok;
-
-	while ((tok = strsep(&dup_list, LIST_DELIM))) {
-		if (!strcmp(tok, component)) {
-			return true;
-		}
-	}
-
-	free(dup_list);
-
-	return false;
-}
-
-void umber_log(umber_lvl_t const lvl, char const* const component, char const* const path, uint32_t const line, char const* const msg) {
-	// check log level and compare it to 'UMBER_LVL' envvar
-
-	char* const lvl_env = getenv("UMBER_LVL");
-	umber_lvl_t max_lvl = UMBER_LVL_SUCCESS;
-
-	if (
-		lvl_env &&
-		*lvl_env >= '0' + UMBER_LVL_FATAL &&
-		*lvl_env <= '0' + UMBER_LVL_VERBOSE
-	) {
-		max_lvl = *lvl_env - '0';
-	}
-
-	if (lvl > max_lvl) {
+	if (lvl < cls->lvl) {
 		return;
 	}
 
-	// check component filter (blacklist/whitelist/nothing)
-	// these different filter types are mutually exclusive; you can't have a blacklist & a whitelist at the same time, that would be preposterous, even silly!
-
-	char* const whitelist = getenv("UMBER_WHITELIST");
-	char* const blacklist = getenv("UMBER_BLACKLIST");
-
-	if (whitelist && !component_in_list(whitelist, component)) {
-		return;
-	}
-
-	else if (blacklist && component_in_list(blacklist, component)) {
-		return;
-	}
-
-	// get information about the log level (colour, output stream, & level string)
+	// Get information about the log level (colour, output stream, & level string).
 
 	char* lvl_str;
 	FILE* fp;
@@ -216,7 +170,7 @@ void umber_log(umber_lvl_t const lvl, char const* const component, char const* c
 #undef LVL_CASE
 	}
 
-	// truncate file path
+	// Truncate file path.
 
 	char const* truncated_path = path;
 	size_t len = strlen(path);
@@ -232,27 +186,38 @@ void umber_log(umber_lvl_t const lvl, char const* const component, char const* c
 		len = strlen(truncated_path);
 	}
 
-	// actually log
+	// Actually log.
 
 	char const* const ellipsis = truncated_path == path ? "" : ".../";
 
-	fprintf(fp, BOLD "%s[%s %s -> %s%s:%d]" REGULAR "%s %s" CLEAR "\n", colour, lvl_str, component, ellipsis, truncated_path, line, colour, msg);
+	fprintf(
+		fp,
+		BOLD "%s[%s %s -> %s%s:%d]" REGULAR "%s %s" CLEAR "\n",
+		colour,
+		lvl_str,
+		cls->name,
+		ellipsis,
+		truncated_path,
+		line,
+		colour,
+		msg
+	);
 }
 
-void umber_vlog(umber_lvl_t const lvl, char const* const component, char const* const path, uint32_t const line, char const* const fmt, ...) {
+void umber_vlog(umber_class_t const* cls, umber_lvl_t const lvl, char const* const path, uint32_t const line, char const* const fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
 	char* msg;
 	vasprintf(&msg, fmt, args);
 
-	if (!msg) {
-		umber_log(UMBER_LVL_FATAL, "umber", __FILE__, __LINE__, "Failed to allocate space for log message");
+	if (msg == NULL) {
+		umber_log(cls, UMBER_LVL_FATAL, __FILE__, __LINE__, "Failed to allocate space for log message");
 		return;
 	}
 
 	va_end(args);
 
-	umber_log(lvl, component, path, line, msg);
+	umber_log(cls, lvl, path, line, msg);
 	free(msg);
 }
