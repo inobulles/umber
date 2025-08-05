@@ -81,9 +81,9 @@ typedef struct umber_class_t umber_class_t;
  * @param description The class' description.
  * @return A pointer to the new logging class.
  */
-umber_class_t* umber_class_new(
+umber_class_t const* umber_class_new(
 	char const name[UMBER_CLASS_NAME_MAX],
-	umber_lvl_t default_lvl,
+	umber_lvl_t const default_lvl,
 	char const description[UMBER_CLASS_DESCRIPTION_MAX]
 );
 
@@ -98,7 +98,13 @@ umber_class_t* umber_class_new(
  * @param line Line number the log message is coming from.
  * @param msg Message to log.
  */
-void umber_log(umber_lvl_t const lvl, char const* const component, char const* const path, uint32_t const line, char const* const msg);
+void umber_log(
+	umber_class_t const* const cls,
+	umber_lvl_t const lvl,
+	char const* const path,
+	uint32_t const line,
+	char const* const msg
+);
 
 /**
  * Log a message with a format string.
@@ -113,7 +119,14 @@ void umber_log(umber_lvl_t const lvl, char const* const component, char const* c
  * @param fmt Format string.
  * @param ... Arguments to the format string.
  */
-__attribute__((__format__(__printf__, 5, 0))) void umber_vlog(umber_lvl_t const lvl, char const* const component, char const* const path, uint32_t const line, char const* const fmt, ...);
+__attribute__((__format__(__printf__, 5, 0))) void umber_vlog(
+	umber_class_t const* const cls,
+	umber_lvl_t const lvl,
+	char const* const path,
+	uint32_t const line,
+	char const* const fmt,
+	...
+);
 
 // Helper macros.
 
@@ -122,55 +135,55 @@ __attribute__((__format__(__printf__, 5, 0))) void umber_vlog(umber_lvl_t const 
  *
  * An error occurred which prevents the component from continuing operation.
  * You may pass a format string and arguments to this as you would {@link printf}.
- * {@link UMBER_COMPONENT} must be set for the component name to be set correctly.
  *
+ * @param cls Logging class to use.
  * @param ... Message to log.
  */
-#define LOG_FATAL(...) umber_vlog(UMBER_LVL_FATAL, UMBER_COMPONENT, __FILE__, __LINE__, __VA_ARGS__)
+#define LOG_FATAL(cls, ...) umber_vlog((cls), UMBER_LVL_FATAL, __FILE__, __LINE__, __VA_ARGS__)
 
 /**
  * Log an error message.
  *
  * An error occurred which may impair some of the component's functionality.
  * You may pass a format string and arguments to this as you would {@link printf}.
- * {@link UMBER_COMPONENT} must be set for the component name to be set correctly.
  *
+ * @param cls Logging class to use.
  * @param ... Message to log.
  */
-#define LOG_ERROR(...) umber_vlog(UMBER_LVL_ERROR, UMBER_COMPONENT, __FILE__, __LINE__, __VA_ARGS__)
+#define LOG_ERROR(cls, ...) umber_vlog((cls), UMBER_LVL_ERROR, __FILE__, __LINE__, __VA_ARGS__)
 
 /**
  * Log a warning message.
  *
  * Something is not necessarily wrong, but is a bit unexpected.
  * You may pass a format string and arguments to this as you would {@link printf}.
- * {@link UMBER_COMPONENT} must be set for the component name to be set correctly.
  *
+ * @param cls Logging class to use.
  * @param ... Message to log.
  */
-#define LOG_WARN(...) umber_vlog(UMBER_LVL_WARN, UMBER_COMPONENT, __FILE__, __LINE__, __VA_ARGS__)
+#define LOG_WARN(cls, ...) umber_vlog((cls), UMBER_LVL_WARN, __FILE__, __LINE__, __VA_ARGS__)
 
 /**
  * Log a success message.
  *
  * The component executed a large operation successfully.
  * You may pass a format string and arguments to this as you would {@link printf}.
- * {@link UMBER_COMPONENT} must be set for the component name to be set correctly.
  *
+ * @param cls Logging class to use.
  * @param ... Message to log.
  */
-#define LOG_SUCCESS(...) umber_vlog(UMBER_LVL_SUCCESS, UMBER_COMPONENT, __FILE__, __LINE__, __VA_ARGS__)
+#define LOG_SUCCESS(cls, ...) umber_vlog((cls), UMBER_LVL_SUCCESS, __FILE__, __LINE__, __VA_ARGS__)
 
 /**
  * Log an informational message.
  *
  * The component is doing something.
  * You may pass a format string and arguments to this as you would {@link printf}.
- * {@link UMBER_COMPONENT} must be set for the component name to be set correctly.
  *
+ * @param cls Logging class to use.
  * @param ... Message to log.
  */
-#define LOG_INFO(...) umber_vlog(UMBER_LVL_INFO, UMBER_COMPONENT, __FILE__, __LINE__, __VA_ARGS__)
+#define LOG_INFO(cls, ...) umber_vlog((cls), UMBER_LVL_INFO, __FILE__, __LINE__, __VA_ARGS__)
 
 /**
  * Log a verbose message.
@@ -178,8 +191,8 @@ __attribute__((__format__(__printf__, 5, 0))) void umber_vlog(umber_lvl_t const 
  * Extremely detailed information about what the component is currently doing.
  * This information is to be used for tracing.
  * You may pass a format string and arguments to this as you would {@link printf}.
- * {@link UMBER_COMPONENT} must be set for the component name to be set correctly.
  *
+ * @param cls Logging class to use.
  * @param ... Message to log.
  */
-#define LOG_VERBOSE(...) umber_vlog(UMBER_LVL_VERBOSE, UMBER_COMPONENT, __FILE__, __LINE__, __VA_ARGS__)
+#define LOG_VERBOSE(cls, ...) umber_vlog((cls), UMBER_LVL_VERBOSE, __FILE__, __LINE__, __VA_ARGS__)
