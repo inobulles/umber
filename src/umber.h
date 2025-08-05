@@ -2,11 +2,9 @@
 // Copyright (c) 2022-2025 Aymeric Wibo
 
 #undef UMBER_COMPONENT // Force user to define this after header inclusion.
+#pragma once
 
-#if !defined(__UMBER__)
-# define __UMBER__
-
-# include <stdint.h>
+#include <stdint.h>
 
 /**
  * Umber log levels.
@@ -92,7 +90,7 @@ __attribute__((__format__(__printf__, 6, 0))) void umber_vlog(umber_lvl_t const 
  *
  * @param ... Message to log.
  */
-# define LOG_FATAL(...) umber_vlog(UMBER_LVL_FATAL, UMBER_COMPONENT, __FILE__, __func__, __LINE__, __VA_ARGS__)
+#define LOG_FATAL(...) umber_vlog(UMBER_LVL_FATAL, UMBER_COMPONENT, __FILE__, __func__, __LINE__, __VA_ARGS__)
 
 /**
  * Log an error message.
@@ -103,7 +101,7 @@ __attribute__((__format__(__printf__, 6, 0))) void umber_vlog(umber_lvl_t const 
  *
  * @param ... Message to log.
  */
-# define LOG_ERROR(...) umber_vlog(UMBER_LVL_ERROR, UMBER_COMPONENT, __FILE__, __func__, __LINE__, __VA_ARGS__)
+#define LOG_ERROR(...) umber_vlog(UMBER_LVL_ERROR, UMBER_COMPONENT, __FILE__, __func__, __LINE__, __VA_ARGS__)
 
 /**
  * Log a warning message.
@@ -114,7 +112,7 @@ __attribute__((__format__(__printf__, 6, 0))) void umber_vlog(umber_lvl_t const 
  *
  * @param ... Message to log.
  */
-# define LOG_WARN(...) umber_vlog(UMBER_LVL_WARN, UMBER_COMPONENT, __FILE__, __func__, __LINE__, __VA_ARGS__)
+#define LOG_WARN(...) umber_vlog(UMBER_LVL_WARN, UMBER_COMPONENT, __FILE__, __func__, __LINE__, __VA_ARGS__)
 
 /**
  * Log a success message.
@@ -125,7 +123,7 @@ __attribute__((__format__(__printf__, 6, 0))) void umber_vlog(umber_lvl_t const 
  *
  * @param ... Message to log.
  */
-# define LOG_SUCCESS(...) umber_vlog(UMBER_LVL_SUCCESS, UMBER_COMPONENT, __FILE__, __func__, __LINE__, __VA_ARGS__)
+#define LOG_SUCCESS(...) umber_vlog(UMBER_LVL_SUCCESS, UMBER_COMPONENT, __FILE__, __func__, __LINE__, __VA_ARGS__)
 
 /**
  * Log an informational message.
@@ -136,7 +134,7 @@ __attribute__((__format__(__printf__, 6, 0))) void umber_vlog(umber_lvl_t const 
  *
  * @param ... Message to log.
  */
-# define LOG_INFO(...) umber_vlog(UMBER_LVL_INFO, UMBER_COMPONENT, __FILE__, __func__, __LINE__, __VA_ARGS__)
+#define LOG_INFO(...) umber_vlog(UMBER_LVL_INFO, UMBER_COMPONENT, __FILE__, __func__, __LINE__, __VA_ARGS__)
 
 /**
  * Log a verbose message.
@@ -148,6 +146,4 @@ __attribute__((__format__(__printf__, 6, 0))) void umber_vlog(umber_lvl_t const 
  *
  * @param ... Message to log.
  */
-# define LOG_VERBOSE(...) umber_vlog(UMBER_LVL_VERBOSE, UMBER_COMPONENT, __FILE__, __func__, __LINE__, __VA_ARGS__)
-
-#endif
+#define LOG_VERBOSE(...) umber_vlog(UMBER_LVL_VERBOSE, UMBER_COMPONENT, __FILE__, __func__, __LINE__, __VA_ARGS__)
