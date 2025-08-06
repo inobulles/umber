@@ -1,19 +1,13 @@
 #include <umber.h>
 
-void FUNC_NAME(void) {
-#define UMBER_COMPONENT COMP_A
-	LOG_VERBOSE("%s", SPEC_A); // line 5
-#undef UMBER_COMPONENT
-
-#define UMBER_COMPONENT COMP_B
-	LOG_VERBOSE("%s", SPEC_B); // line 9
-#undef UMBER_COMPONENT
-
-#define UMBER_COMPONENT COMP_C
-	LOG_VERBOSE("%s", SPEC_C); // line 13
-}
-
 int main(void) {
-	FUNC_NAME();
+	umber_class_t const* const cls_a = umber_class_new(CLASS_A, UMBER_LVL_VERBOSE, "Class A");
+	umber_class_t const* const cls_b = umber_class_new(CLASS_B, UMBER_LVL_VERBOSE, "Class B");
+	umber_class_t const* const cls_c = umber_class_new(CLASS_C, UMBER_LVL_VERBOSE, "Class C");
+
+	LOG_V(cls_a, "%s", SPEC_A); // Line 8.
+	LOG_V(cls_b, "%s", SPEC_B); // Line 9.
+	LOG_V(cls_c, "%s", SPEC_C); // Line 10.
+
 	return 0;
 }

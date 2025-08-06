@@ -12,16 +12,14 @@ green="32m"
 blue="34m"
 grey="37m"
 
-func_name=_$(openssl rand -hex 6)
-
-# build the example we'll be testing on
-# would have like to use some kind of dynamic variables thing but what the heck, ain't nobody got time to test this on the 50 different shells which may be linked to '/bin/sh'
+# Build the example we'll be testing on.
+# Would have like to use some kind of dynamic variables thing but what the heck, ain't nobody got time to test this on the 50 different shells which may be linked to '/bin/sh'.
 
 src_path=tests/filter/filter.c
 
-comp_a=$(openssl rand -base64 6)
-comp_b=$(openssl rand -base64 6)
-comp_c=$(openssl rand -base64 6)
+class_a=$(openssl rand -hex 6)-A
+class_b=$(openssl rand -hex 6)-B
+class_c=$class_b.$(openssl rand -hex 6)-C
 
 spec_a=$(openssl rand -base64 6)
 spec_b=$(openssl rand -base64 6)
@@ -32,57 +30,46 @@ if [ "$(uname)" = "Darwin" ]; then
 fi
 
 cc -std=c99 $src_path $rpath -lumber -I/usr/local/include -o filter \
-	-DFUNC_NAME=$func_name \
-	-DCOMP_A=\"$comp_a\" -DSPEC_A=\"$spec_a\" \
-	-DCOMP_B=\"$comp_b\" -DSPEC_B=\"$spec_b\" \
-	-DCOMP_C=\"$comp_c\" -DSPEC_C=\"$spec_c\"
+	-DCLASS_A=\"$class_a\" -DSPEC_A=\"$spec_a\" \
+	-DCLASS_B=\"$class_b\" -DSPEC_B=\"$spec_b\" \
+	-DCLASS_C=\"$class_c\" -DSPEC_C=\"$spec_c\"
 
-# clear relevant environment variables to make sure they don't contaminate our testing setup
+# Expected output.
 
-unset UMBER_BLACKLIST
-unset UMBER_WHITELIST
-
-# so that we don't have to think about it each time again, export the log level once here
-
-export UMBER_LVL=5
-
-# expected output
-
-printf "$bold$grey[VERBOSE $comp_a -> $src_path:5 -> $func_name]$regular$grey $spec_a$clear_
-$bold$grey[VERBOSE $comp_b -> $src_path:9 -> $func_name]$regular$grey $spec_b$clear_
-$bold$grey[VERBOSE $comp_c -> $src_path:13 -> $func_name]$regular$grey $spec_c$clear_
+printf "$bold$grey[V $class_a $src_path:8]$regular$grey $spec_a$clear_
+$bold$grey[V $class_b $src_path:9]$regular$grey $spec_b$clear_
+$bold$grey[V $class_c $src_path:10]$regular$grey $spec_c$clear_
 " > expected
 
-# test no filtering
+# Test no filtering.
 
-./filter > got
+UMBER_LVL= ./filter > got
 diff expected got
 
-# test blacklisting
+# Test blacklisting.
 
-UMBER_BLACKLIST=$comp_a ./filter > got
-grep -v $comp_a expected | diff got -
+UMBER_LVL=$class_a=never ./filter > got
+grep -v $class_a expected | diff got -
 
-UMBER_BLACKLIST=$comp_a:$comp_b ./filter > got
-grep -v $comp_a'\|'$comp_b expected | diff got -
+UMBER_LVL=$class_a=never,$class_c=never ./filter > got
+grep -v $class_a'\|'$class_c expected | diff got -
 
-UMBER_BLACKLIST=$comp_a:$comp_b:$comp_c ./filter > got
-grep -v $comp_a'\|'$comp_b'\|'$comp_c expected | diff got -
+UMBER_LVL=$class_a=never,$class_b*=never ./filter > got
+grep -v $class_a'\|'$class_b\ '\|'$class_c expected | diff got -
 
-# test whitelisting
+UMBER_LVL=$class_a=never,$class_b=never ./filter > got
+grep -v $class_a'\|'$class_b\  expected | diff got -
 
-UMBER_WHITELIST=$comp_a ./filter > got
-grep $comp_a expected | diff got -
+# Test whitelisting.
 
-UMBER_WHITELIST=$comp_a:$comp_b ./filter > got
-grep $comp_a'\|'$comp_b expected | diff got -
+UMBER_LVL=*=never,$class_a=verbose ./filter > got
+grep $class_a expected | diff got -
 
-UMBER_WHITELIST=$comp_a:$comp_b:$comp_c ./filter > got
-grep $comp_a'\|'$comp_b'\|'$comp_c expected | diff got -
+UMBER_LVL=*=never,$class_a=verbose,$class_b=verbose ./filter > got
+grep $class_a'\|'$class_b\  expected | diff got -
 
-# test both at once (blacklist should take precedence)
+UMBER_LVL=*=never,$class_a=verbose,$class_b*=verbose ./filter > got
+grep $class_a'\|'$class_b\ '\|'$class_c expected | diff got -
 
-UMBER_BLACKLIST=$comp_a:$comp_c ./filter > expected
-UMBER_BLACKLIST=$comp_a:$comp_c UMBER_WHITELIST=$comp_b ./filter > got
-
-diff expected got
+UMBER_LVL=*=never,$class_a=verbose,$class_c=verbose ./filter > got
+grep $class_a'\|'$class_c expected | diff got -
