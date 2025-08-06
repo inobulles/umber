@@ -7,7 +7,7 @@ task:
     ASAN_OPTIONS: detect_leaks=0
     LD_LIBRARY_PATH: /usr/local/lib
   bootstrap_script:
-    - git clone https://github.com/inobulles/bob --depth 1 --branch v0.2.16
+    - git clone https://github.com/inobulles/bob --depth 1 --branch v0.2.17
     - ( cd bob && sh bootstrap.sh && .bootstrap/bob install )
   build_script:
     - bob install
@@ -26,7 +26,7 @@ task:
     ASAN_OPTIONS: detect_leaks=0
     LD_LIBRARY_PATH: /usr/local/lib
   bootstrap_script:
-    - git clone https://github.com/inobulles/bob --depth 1 --branch v0.2.16
+    - git clone https://github.com/inobulles/bob --depth 1 --branch v0.2.17
     - ( cd bob && sh bootstrap.sh && .bootstrap/bob install )
   build_script:
     - bob install
