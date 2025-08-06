@@ -1,16 +1,16 @@
 #include <umber.h>
-#define UMBER_COMPONENT COMPONENT
-
-void FUNC_NAME(void) {
-	LOG_FATAL(TEST_FMT, TEST_ARG);   // line 5
-	LOG_ERROR(TEST_FMT, TEST_ARG);   // line 6
-	LOG_WARN(TEST_FMT, TEST_ARG);    // line 7
-	LOG_SUCCESS(TEST_FMT, TEST_ARG); // line 8
-	LOG_INFO(TEST_FMT, TEST_ARG);    // line 9
-	LOG_VERBOSE(TEST_FMT, TEST_ARG); // line 10
-}
+#include <stdio.h>
 
 int main(void) {
-	FUNC_NAME();
+	umber_class_t const* const cls = umber_class_new(CLASS_NAME, UMBER_LVL_VERBOSE, "");
+
+	fprintf(stderr, "\n"); // Dummy space so we can use head -n1 to get no output.
+
+	LOG_F(cls, TEST_FMT, TEST_ARG); // line 9
+	LOG_E(cls, TEST_FMT, TEST_ARG); // line 10
+	LOG_W(cls, TEST_FMT, TEST_ARG); // line 11
+	LOG_I(cls, TEST_FMT, TEST_ARG); // line 12
+	LOG_V(cls, TEST_FMT, TEST_ARG); // line 13
+
 	return 0;
 }
