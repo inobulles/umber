@@ -135,8 +135,6 @@ __attribute__((__format__(__printf__, 5, 0))) void umber_vlog(
 	...
 );
 
-// Helper macros.
-
 /**
  * Log a fatal error message.
  *
@@ -146,7 +144,7 @@ __attribute__((__format__(__printf__, 5, 0))) void umber_vlog(
  * @param cls Logging class to use.
  * @param ... Message to log.
  */
-#define LOG_FATAL(cls, ...) umber_vlog((cls), UMBER_LVL_FATAL, __FILE__, __LINE__, __VA_ARGS__)
+#define LOG_F(cls, ...) umber_vlog((cls), UMBER_LVL_FATAL, __FILE__, __LINE__, __VA_ARGS__)
 
 /**
  * Log an error message.
@@ -157,7 +155,7 @@ __attribute__((__format__(__printf__, 5, 0))) void umber_vlog(
  * @param cls Logging class to use.
  * @param ... Message to log.
  */
-#define LOG_ERROR(cls, ...) umber_vlog((cls), UMBER_LVL_ERROR, __FILE__, __LINE__, __VA_ARGS__)
+#define LOG_E(cls, ...) umber_vlog((cls), UMBER_LVL_ERROR, __FILE__, __LINE__, __VA_ARGS__)
 
 /**
  * Log a warning message.
@@ -168,7 +166,7 @@ __attribute__((__format__(__printf__, 5, 0))) void umber_vlog(
  * @param cls Logging class to use.
  * @param ... Message to log.
  */
-#define LOG_WARN(cls, ...) umber_vlog((cls), UMBER_LVL_WARN, __FILE__, __LINE__, __VA_ARGS__)
+#define LOG_W(cls, ...) umber_vlog((cls), UMBER_LVL_WARN, __FILE__, __LINE__, __VA_ARGS__)
 
 /**
  * Log an informational message.
@@ -179,7 +177,7 @@ __attribute__((__format__(__printf__, 5, 0))) void umber_vlog(
  * @param cls Logging class to use.
  * @param ... Message to log.
  */
-#define LOG_INFO(cls, ...) umber_vlog((cls), UMBER_LVL_INFO, __FILE__, __LINE__, __VA_ARGS__)
+#define LOG_I(cls, ...) umber_vlog((cls), UMBER_LVL_INFO, __FILE__, __LINE__, __VA_ARGS__)
 
 /**
  * Log a verbose message.
@@ -191,4 +189,4 @@ __attribute__((__format__(__printf__, 5, 0))) void umber_vlog(
  * @param cls Logging class to use.
  * @param ... Message to log.
  */
-#define LOG_VERBOSE(cls, ...) umber_vlog((cls), UMBER_LVL_VERBOSE, __FILE__, __LINE__, __VA_ARGS__)
+#define LOG_V(cls, ...) umber_vlog((cls), UMBER_LVL_VERBOSE, __FILE__, __LINE__, __VA_ARGS__)
