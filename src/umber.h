@@ -10,6 +10,12 @@
  */
 typedef enum {
 	/**
+	 * Never log.
+	 *
+	 * This is used to disable logging for a class.
+	 */
+	UMBER_LVL_NEVER,
+	/**
 	 * Fatal error.
 	 *
 	 * An error occurred which prevents the component from continuing operation.
