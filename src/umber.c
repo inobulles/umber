@@ -131,6 +131,8 @@ umber_class_t const* umber_class_new(
 		}
 	}
 
+	free(dup_lvl_env);
+
 	return c;
 }
 
