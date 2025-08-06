@@ -76,6 +76,11 @@ umber_class_t const* umber_class_new(
 
 	while ((tok = strsep(&dup_lvl_env, ",")) != NULL) {
 		char* const eq = strchr(tok, '=');
+
+		if (eq == NULL) {
+			continue;
+		}
+
 		*eq = '\0';
 
 		char const* const tok_name = tok;
@@ -100,6 +105,7 @@ umber_class_t const* umber_class_new(
 		case '0':
 		case 'n':
 			c->lvl = UMBER_LVL_NEVER;
+			break;
 		case '1':
 		case 'f':
 			c->lvl = UMBER_LVL_FATAL;
@@ -135,9 +141,9 @@ void umber_log(
 	uint32_t const line,
 	char const* const msg
 ) {
-	// Drop message if the log level is lower than the class's log level.
+	// Drop message if the log level is higher than the class's log level.
 
-	if (lvl < cls->lvl) {
+	if (lvl > cls->lvl) {
 		return;
 	}
 
@@ -191,7 +197,7 @@ void umber_log(
 
 	fprintf(
 		fp,
-		BOLD "%s[%s %s -> %s%s:%d]" REGULAR "%s %s" CLEAR "\n",
+		BOLD "%s[%s %s %s%s:%d]" REGULAR "%s %s" CLEAR "\n",
 		colour,
 		lvl_str,
 		cls->name,
