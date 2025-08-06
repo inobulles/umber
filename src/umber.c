@@ -113,14 +113,10 @@ umber_class_t const* umber_class_new(
 			c->lvl = UMBER_LVL_WARN;
 			break;
 		case '4':
-		case 's':
-			c->lvl = UMBER_LVL_SUCCESS;
-			break;
-		case '5':
 		case 'i':
 			c->lvl = UMBER_LVL_INFO;
 			break;
-		case '6':
+		case '5':
 		case 'v':
 			c->lvl = UMBER_LVL_VERBOSE;
 			break;
@@ -164,7 +160,6 @@ void umber_log(
 		LVL_CASE(FATAL, stderr, PURPLE)
 		LVL_CASE(ERROR, stderr, RED)
 		LVL_CASE(WARN, stderr, YELLOW)
-		LVL_CASE(SUCCESS, stdout, GREEN)
 		LVL_CASE(INFO, stdout, BLUE)
 		LVL_CASE(VERBOSE, stdout, GREY)
 

@@ -34,12 +34,6 @@ typedef enum {
 	 */
 	UMBER_LVL_WARN,
 	/**
-	 * Success message.
-	 *
-	 * The component executed a large operation successfully.
-	 */
-	UMBER_LVL_SUCCESS,
-	/**
 	 * Informational message.
 	 *
 	 * The component is doing something.
@@ -168,17 +162,6 @@ __attribute__((__format__(__printf__, 5, 0))) void umber_vlog(
  * @param ... Message to log.
  */
 #define LOG_WARN(cls, ...) umber_vlog((cls), UMBER_LVL_WARN, __FILE__, __LINE__, __VA_ARGS__)
-
-/**
- * Log a success message.
- *
- * The component executed a large operation successfully.
- * You may pass a format string and arguments to this as you would {@link printf}.
- *
- * @param cls Logging class to use.
- * @param ... Message to log.
- */
-#define LOG_SUCCESS(cls, ...) umber_vlog((cls), UMBER_LVL_SUCCESS, __FILE__, __LINE__, __VA_ARGS__)
 
 /**
  * Log an informational message.
