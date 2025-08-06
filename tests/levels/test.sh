@@ -34,11 +34,11 @@ cc -std=c99 $src_path $rpath -lumber -I/usr/local/include -o levels \
 # Test all the log levels.
 
 printf "
-$bold$purple[F $class_name $src_path:9]$regular$purple $test_str $test_arg$clear_
-$bold$red[E $class_name $src_path:10]$regular$red $test_str $test_arg$clear_
-$bold$yellow[W $class_name $src_path:11]$regular$yellow $test_str $test_arg$clear_
-$bold$blue[I $class_name $src_path:12]$regular$blue $test_str $test_arg$clear_
-$bold$grey[V $class_name $src_path:13]$regular$grey $test_str $test_arg$clear_
+$bold$purple[F $class_name $src_path:10]$regular$purple $test_str $test_arg$clear_
+$bold$red[E $class_name $src_path:11]$regular$red $test_str $test_arg$clear_
+$bold$yellow[W $class_name $src_path:12]$regular$yellow $test_str $test_arg$clear_
+$bold$blue[I $class_name $src_path:13]$regular$blue $test_str $test_arg$clear_
+$bold$grey[V $class_name $src_path:14]$regular$grey $test_str $test_arg$clear_
 " > expected
 
 for lvl in $(seq 0 5); do
