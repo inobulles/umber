@@ -98,26 +98,29 @@ umber_class_t const* umber_class_new(
 			c->lvl = c->default_lvl;
 			break;
 		case '0':
+		case 'n':
+			c->lvl = UMBER_LVL_NEVER;
+		case '1':
 		case 'f':
 			c->lvl = UMBER_LVL_FATAL;
 			break;
-		case '1':
+		case '2':
 		case 'e':
 			c->lvl = UMBER_LVL_ERROR;
 			break;
-		case '2':
+		case '3':
 		case 'w':
 			c->lvl = UMBER_LVL_WARN;
 			break;
-		case '3':
+		case '4':
 		case 's':
 			c->lvl = UMBER_LVL_SUCCESS;
 			break;
-		case '4':
+		case '5':
 		case 'i':
 			c->lvl = UMBER_LVL_INFO;
 			break;
-		case '5':
+		case '6':
 		case 'v':
 			c->lvl = UMBER_LVL_VERBOSE;
 			break;
@@ -158,8 +161,6 @@ void umber_log(
 		break;                         \
 	}
 
-	default:
-
 		LVL_CASE(FATAL, stderr, PURPLE)
 		LVL_CASE(ERROR, stderr, RED)
 		LVL_CASE(WARN, stderr, YELLOW)
@@ -168,6 +169,9 @@ void umber_log(
 		LVL_CASE(VERBOSE, stdout, GREY)
 
 #undef LVL_CASE
+
+	default:
+		return;
 	}
 
 	// Truncate file path.
