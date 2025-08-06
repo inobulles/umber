@@ -7,6 +7,8 @@
 
 /**
  * Umber log levels.
+ *
+ * RFC 5424 (syslog) maps surjectively on to these levels.
  */
 typedef enum {
 	/**
@@ -19,24 +21,28 @@ typedef enum {
 	 * Fatal error.
 	 *
 	 * An error occurred which prevents the component from continuing operation.
+	 * This would be the equivalent to RFC 5424's "emergency", "alert", and "critical" levels (0, 1, and 2).
 	 */
 	UMBER_LVL_FATAL,
 	/**
 	 * Error.
 	 *
 	 * An error occurred which may impair some of the component's functionality.
+	 * This would be the equivalent to RFC 5424's "error" level (3).
 	 */
 	UMBER_LVL_ERROR,
 	/**
 	 * Warning.
 	 *
 	 * Something is not necessarily wrong, but is a bit unexpected.
+	 * This would be the equivalent to RFC 5424's "warning" level (4).
 	 */
 	UMBER_LVL_WARN,
 	/**
 	 * Informational message.
 	 *
 	 * The component is doing something.
+	 * This would be the equivalent to RFC 5424's "notice" and "info" levels (5 and 6).
 	 */
 	UMBER_LVL_INFO,
 	/**
@@ -44,6 +50,7 @@ typedef enum {
 	 *
 	 * Extremely detailed information about what the component is currently doing.
 	 * This information is to be used for tracing.
+	 * This would be the equivalent to RFC 5424's "debug" level (7).
 	 */
 	UMBER_LVL_VERBOSE,
 } umber_lvl_t;
