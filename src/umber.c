@@ -148,20 +148,20 @@ void umber_log(
 	char* colour;
 
 	switch (lvl) {
-#define LVL_CASE(name, _fp, _colour) \
-	case UMBER_LVL_##name: {          \
-		lvl_str = #name;               \
-		fp = (_fp);                    \
-		colour = (_colour);            \
-                                     \
-		break;                         \
+#define LVL_CASE(_lvl_str, name, _fp, _colour) \
+	case UMBER_LVL_##name: {                    \
+		lvl_str = (_lvl_str);                    \
+		fp = (_fp);                              \
+		colour = (_colour);                      \
+                                               \
+		break;                                   \
 	}
 
-		LVL_CASE(FATAL, stderr, PURPLE)
-		LVL_CASE(ERROR, stderr, RED)
-		LVL_CASE(WARN, stderr, YELLOW)
-		LVL_CASE(INFO, stdout, BLUE)
-		LVL_CASE(VERBOSE, stdout, GREY)
+		LVL_CASE("F", FATAL, stderr, PURPLE)
+		LVL_CASE("E", ERROR, stderr, RED)
+		LVL_CASE("W", WARN, stderr, YELLOW)
+		LVL_CASE("I", INFO, stdout, BLUE)
+		LVL_CASE("V", VERBOSE, stdout, GREY)
 
 #undef LVL_CASE
 
