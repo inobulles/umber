@@ -9,6 +9,7 @@
 
 #include "umber.h"
 
+#include <assert.h>
 #include <stdarg.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -143,6 +144,10 @@ void umber_log(
 	uint32_t const line,
 	char const* const msg
 ) {
+	assert(cls != NULL);
+	assert(path != NULL);
+	assert(msg != NULL);
+
 	// Drop message if the log level is higher than the class's log level.
 
 	if (lvl > cls->lvl) {
