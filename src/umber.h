@@ -86,7 +86,7 @@ typedef struct umber_class_t umber_class_t;
  * @param name The class' fully-qualified name.
  * @param default_lvl The class' default log level.
  * @param description The class' description.
- * @return A pointer to the new logging class.
+ * @return A pointer to the new logging class or NULL if the class could not be created.
  */
 umber_class_t const* umber_class_new(
 	char const name[UMBER_CLASS_NAME_MAX],
