@@ -83,15 +83,15 @@ typedef struct umber_class_t umber_class_t;
  * As long as you don't introduce a memory leak, you don't have to free this memory.
  * If you want/need to anyway, you can just use {@link free} on the returned pointer.
  *
- * @param name The class' fully-qualified name.
+ * @param name The class' fully-qualified name. Must be {@link UMBER_CLASS_NAME_MAX} characters or less, NULL-terminator included.
  * @param default_lvl The class' default log level.
- * @param description The class' description.
+ * @param description The class' description. Must be {@link UMBER_CLASS_DESCRIPTION_MAX} characters or less, NULL-terminator included.
  * @return A pointer to the new logging class or NULL if the class could not be created.
  */
 umber_class_t const* umber_class_new(
-	char const name[UMBER_CLASS_NAME_MAX],
+	char const* name,
 	umber_lvl_t const default_lvl,
-	char const description[UMBER_CLASS_DESCRIPTION_MAX]
+	char const* description
 );
 
 /**

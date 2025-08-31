@@ -39,9 +39,9 @@ struct umber_class_t {
 };
 
 umber_class_t const* umber_class_new(
-	char const name[UMBER_CLASS_NAME_MAX],
+	char const* name,
 	umber_lvl_t const default_lvl,
-	char const description[UMBER_CLASS_DESCRIPTION_MAX]
+	char const* description
 ) {
 	// Validate name.
 
