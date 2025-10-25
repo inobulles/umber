@@ -38,6 +38,21 @@ struct umber_class_t {
 	umber_lvl_t lvl;
 };
 
+__attribute__((constructor)) void set_linebuf(void) {
+	char const* const val = getenv("UMBER_LINEBUF");
+
+	if (val == NULL) {
+		return;
+	}
+
+	if (*val == '\0' || *val == '0' || strcasecmp(val, "false") == 0) {
+		return;
+	}
+
+	setlinebuf(stdout);
+	setlinebuf(stderr);
+}
+
 umber_class_t const* umber_class_new(
 	char const* name,
 	umber_lvl_t const default_lvl,
