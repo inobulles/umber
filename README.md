@@ -111,4 +111,14 @@ UMBER_LVL=*=never,fully.qualified.class.name=verbose
 
 These assignments are evaluated left-to-right, so latter ones will take precedence.
 
+## Enabling line buffering
+
+If you need to enable line buffering (e.g. you are reading the output of a program using Umber through a pipe let's say and you need `getline()` to return immediately when a new line is produced), you can use the `UMBER_LINEBUF` environment variable:
+
+```console
+UMBER_LINEBUF=true # This can be set to whatever except "", "0", or "false".
+```
+
+This will enable line buffering on both `stdout` and `stderr`.
+
 Thank you for attending my TED Talk.
